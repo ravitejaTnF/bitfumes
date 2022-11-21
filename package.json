@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon express1.js"
+    "dev": "nodemon express-book.js"
   },
   "repository": {
     "type": "git",
