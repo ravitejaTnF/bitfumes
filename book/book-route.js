@@ -12,7 +12,7 @@ router.use(bookRouter);
 
 router.get('/*',(req,res) => {
     //res.send('Page no found..😒');
-    res.sendFile(path.join(__dirname,'/../pages/page-not-found.html'));
+    res.status(404).sendFile(path.join(__dirname,'/../pages/page-not-found.html'));
 })
 
 module.exports = router;

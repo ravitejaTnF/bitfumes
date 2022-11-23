@@ -24,10 +24,6 @@ bookrouter.get('/book/:id', async(req, res) => {
     const data = await db.collection('book-db').find({_id}).toArray();
     res.json(data);
 })
-bookrouter.post('/book/:id', async(req, res) => {
-    let id = req.params.id;
-    res.json({ data: `Book ${id} is stored` });
-})
 bookrouter.patch('/book/:id', async(req, res) => {
     const _id = ObjectId(req.params.id);
     const db = await connect();
@@ -38,6 +34,6 @@ bookrouter.delete('/book/:id', async(req, res) => {
     const _id = ObjectId(req.params.id);
     const db = await connect();
     await db.collection('book-db').deleteOne({_id});
-    res.json({ data: `Book is deleted` });
+    res.status(204).json();
 })
 module.exports = bookrouter;
