@@ -9,11 +9,10 @@ bookrouter.route('/book')
         res.json(books);
     })
     .post(async(req, res) => {
+        // console.log(req.body);
+        // res.json(req.body);
         const db = await connect();
-        const data = {
-            firstName:'Raviteja',
-            lastName:'Sunkara'
-        };
+        const data = req.body;
         await db.collection('book-db').insertOne(data);
         res.json({ data: 'Book is stored' });
     })
