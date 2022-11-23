@@ -1,39 +1,12 @@
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const bookrouter = express.Router();
-const connect = require('./../database/db');
-
+const BookController = require('./../controllers/BookController');
 bookrouter.route('/book')
-    .get(async(req, res) => {
-        const db = await connect();
-        const books = await db.collection('book-db').find().toArray();
-        res.json(books);
-    })
-    .post(async(req, res) => {
-        // console.log(req.body);
-        // res.json(req.body);
-        const db = await connect();
-        const data = req.body;
-        await db.collection('book-db').insertOne(data);
-        res.json({ data: 'Book is stored' });
-    })
+    .get(BookController.getAllBooks)
+    .post(BookController.createBook)
 
-bookrouter.get('/book/:id', async(req, res) => {
-    const _id = ObjectId(req.params.id);
-    const db = await connect();
-    const data = await db.collection('book-db').find({_id}).toArray();
-    res.json(data);
-})
-bookrouter.patch('/book/:id', async(req, res) => {
-    const _id = ObjectId(req.params.id);
-    const db = await connect();
-    await db.collection('book-db').updateOne({_id },{$set:req.body});
-    res.json({ data: `Book is updated` });
-})
-bookrouter.delete('/book/:id', async(req, res) => {
-    const _id = ObjectId(req.params.id);
-    const db = await connect();
-    await db.collection('book-db').deleteOne({_id});
-    res.status(204).json();
-})
+bookrouter.get('/book/:id', BookController.getSingleBook)
+bookrouter.patch('/book/:id', BookController.updateBook)
+bookrouter.delete('/book/:id', BookController.deleteBook)
 module.exports = bookrouter;
